@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Google Gimini Generate Questions, Answers and Feedback from Prompt</title>
+    <script src="scripts/google_ai_gimini_generate_questions.js" defer="true"></script>
+    <script src="scripts/export_data_as_spreadsheet.js" defer="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js" defer="true"></script>
+    <link rel="stylesheet" href="styles/google_ai_gimini_generate_questions.css" />
+  </head>
+  <body>
+    <h1>General Knowledge Check AI Content Generator</h1>
+    <div id="Instructions">To use, paste the information you want to the Gimini 1.5-Pro model to analyze and generate questions, answers and feedback to. When ready, select Generate Questions to generate the questions. If happy with the results, select Export Questions to generate a spreadsheet with the questions, answers and feedback</div>
+    <br>
+    <textarea id="promptInput" placeholder="Enter a prompt"></textarea>
+    <label for="numberOfQuestions">Number of Questions</label>
+    <input
+      name="numberOfQuestions"
+      type="text"
+      id="numberOfQuestions"
+      placeholder="5"
+    />
+    <button onclick="queryGiminiAPI()">Generate Content</button>
+    <div id="responseContainer">
+      <p id="responseStatus"></p>
+    </div>
+  </body>
+</html>
