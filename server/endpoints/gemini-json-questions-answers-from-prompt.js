@@ -1,5 +1,5 @@
 import model from "../services/gemini-model-connection.js";
-
+import { FunctionDeclarationSchemaType } from "@google/generative-ai";
 async function callGeminiPrompt(text, numberOfQuestions) {
   console.log(text);
   console.log(numberOfQuestions);
@@ -9,6 +9,39 @@ async function callGeminiPrompt(text, numberOfQuestions) {
     topP: 0.7,
     maxOutputTokens: 16384,
     responseMimeType: "application/json",
+    responseSchema: {
+      type: FunctionDeclarationSchemaType.ARRAY,
+      items: {
+        type: FunctionDeclarationSchemaType.OBJECT,
+        properties: {
+          question: {
+            type: FunctionDeclarationSchemaType.STRING,
+          },
+          answers: {
+            type: FunctionDeclarationSchemaType.ARRAY,
+            items: {
+              type: FunctionDeclarationSchemaType.STRING,
+            },
+          },
+          correctAnswerIndex: {
+            type: FunctionDeclarationSchemaType.NUMBER,
+          },
+          correctFeedback: {
+            type: FunctionDeclarationSchemaType.STRING,
+          },
+          incorrectFeedback: {
+            type: FunctionDeclarationSchemaType.STRING,
+          },
+        },
+        required: [
+          "question",
+          "answers",
+          "correctAnswerIndex",
+          "correctFeedback",
+          "incorrectFeedback",
+        ],
+      },
+    },
   };
 
   const parts = [{ text }];
@@ -22,15 +55,7 @@ async function callGeminiPrompt(text, numberOfQuestions) {
         },
       ],
       generationConfig,
-      systemInstruction: `You are given a specific prompt containing information. So long as you have enough unique information, your task is to generate exactly the number of multiple-choice questions requested, based solely on the information within the prompt. If there is not enough information provided in the prompt you should only generate as many questions as possible. Do not add any additional information, even if it is factually correct. Only use the details provided in the prompt to generate questions, correct answers, and distractors. The correct answers must match the information in the prompt exactly. If the prompt says 'Family Guy was created in 1980,' the correct answer must reflect this, regardless of any other knowledge you may have. Your response must be in valid JSON format with an array of ${numberOfQuestions} json objects with the following schema for each question,
-      {
-        question: string, 
-        answers: array of strings,
-        correctAnswerIndex: number,
-        correctFeedback: string,
-        incorrectFeedback: string        
-      }
-      Be very careful to ensure the response is properlly structured JSON.
+      systemInstruction: `You are given a specific prompt containing information. So long as you have enough unique information, your task is to generate exactly the ${numberOfQuestions} of multiple-choice questions requested, based solely on the information within the prompt. If there is not enough information provided in the prompt you should only generate as many questions as possible. Do not add any additional information, even if it is factually correct. Only use the details provided in the prompt to generate questions, correct answers, and distractors. The correct answers must match the information in the prompt exactly. If the prompt says 'Family Guy was created in 1980,' the correct answer must reflect this, regardless of any other knowledge you may have. Your response must be in valid JSON format with an array of ${numberOfQuestions} json objects with the following schema for each question.
       `,
     });
 
