@@ -34,15 +34,17 @@ async function callGeminiPrompt(text, numberOfQuestions) {
       `,
     });
 
-    // Log the raw response text
     const response = result.response;
     return response;
   } catch (error) {
-    console.error('Error processing or parsing response:', error);
+    console.error("Error processing or parsing response:", error);
     if (error instanceof SyntaxError) {
-      console.error('Failed to parse JSON. Possible incomplete or malformed JSON:', error.message);
+      console.error(
+        "Failed to parse JSON. Possible incomplete or malformed JSON:",
+        error.message
+      );
     }
-    throw new Error('Failed to process response or parse JSON');
+    throw new Error("Failed to process response or parse JSON");
   }
 }
 

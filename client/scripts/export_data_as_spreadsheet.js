@@ -34,11 +34,7 @@ function exportToXLSX() {
       if (x === questions[i].correctAnswerIndex) {
         mark = "X";
       }
-      worksheetData.push([
-        mark, 
-        "", 
-        questions[i].answers[x]
-    ]);
+      worksheetData.push([mark, "", questions[i].answers[x]]);
     }
   }
 
