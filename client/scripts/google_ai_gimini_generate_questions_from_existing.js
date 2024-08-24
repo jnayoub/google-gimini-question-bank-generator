@@ -14,7 +14,7 @@ function queryGiminiAPI() {
     alert("Please enter a prompt.");
     return;
   }
-  fetch("/gemini-prompt", {
+  fetch("/gemini-prompt-existing-questions", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
