@@ -8,7 +8,7 @@ function queryGiminiAPI() {
   const inputNumberOfQuestions = parseInt(
     document.querySelectorAll("#numberOfQuestions")[0].value
   );
-  const numberOfQuestions = inputNumberOfQuestions || 5;
+  const numberOfQuestions = 5;
   const prompt = document.getElementById("promptInput").value;
   if (!prompt) {
     alert("Please enter a prompt.");
